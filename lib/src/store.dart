@@ -3,6 +3,29 @@ import 'package:riverpod_redux/src/middleware.dart';
 import 'package:riverpod_redux/src/next_dispatcher.dart';
 import 'package:riverpod_redux/src/reducer.dart';
 
+/// Redux Store
+///
+/// Store instances should be generated and provided by the Provider.
+///
+/// [StateNotifier.state] is a protected property and cannot be accessed by Middleware.
+/// Instead, [Store] provides a [getState] method.
+///
+/// Example:
+/// ```
+/// loggingMiddleware(Store<int> store, action, NextDispatcher next) {
+///   print('state: ${store.getState()}, action: $action');
+///   next(action);
+/// }
+///
+/// final store = StoreProvider<int>((ref) {
+///   return Store(
+///     counterReducer,
+///     middleware: [
+///       loggingMiddleware,
+///     ],
+///   );
+/// });
+/// ```
 class Store<S> extends StateNotifier<S> {
   final Reducer<S> reducer;
   late final NextDispatcher _initialDispatcher;
