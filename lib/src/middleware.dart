@@ -20,7 +20,8 @@ class TypedMiddleware<S, A> implements MiddlewareClass<S> {
   void call(Store<S> store, dynamic action, NextDispatcher next) {
     if (action is A) {
       middleware(store, action, next);
+    } else {
+      next(action);
     }
-    next(action);
   }
 }
